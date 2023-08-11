@@ -30,3 +30,13 @@ build/
 
 # Yarn
 yarn-error.log
+
+.yarn
+
+.yarnrc.yml
+
+.yarn.lock
+
+.package.json
+
+
