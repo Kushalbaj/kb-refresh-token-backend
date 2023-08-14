@@ -78,7 +78,7 @@ router.post('/token', async (req, res) => {
   if (!user || user.refreshToken !== refreshToken) return res.sendStatus(403);
 
   // Create new tokens
-  const newAccessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+  const newAccessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
   const newRefreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET);
 
   // Update refresh token in database
