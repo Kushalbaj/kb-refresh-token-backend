@@ -26,17 +26,12 @@ dist/
 build/
 
 # Environment variables
+.env.local
+.env.development
+.env.production
 .env
 
 # Yarn
 yarn-error.log
-
 .yarn
-
 .yarnrc.yml
-
-yarn.lock
-
-
-
-
