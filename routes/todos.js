@@ -4,6 +4,31 @@ const User = require('../models/User');
 const Todo = require('../models/Todo');
 const jwt = require('jsonwebtoken');
 
+
+/**
+ * @swagger
+ * /api/user/createusertodo:
+ *   post:
+ *     summary: Create a new todo for the user
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: content
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully created todo
+ *       400:
+ *         description: Error creating todo
+ */
+
+
 // Create a new todo
 router.post('/createusertodo', async (req, res) => {
   // Get user from access token
@@ -27,6 +52,22 @@ router.post('/createusertodo', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/user/getusertodo:
+ *   get:
+ *     summary: Get all todos for the user
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of todos
+ */
+
 // Get user's todos
 router.get('/getusertodo', async (req, res) => {
   // Get user from access token
@@ -38,6 +79,30 @@ router.get('/getusertodo', async (req, res) => {
 
   res.json(todos);
 });
+
+
+/**
+ * @swagger
+ * /api/user/getusertodo/{id}:
+ *   get:
+ *     summary: Get a specific todo by ID for the user
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Specific todo
+ *       404:
+ *         description: Todo not found
+ */
 
 // Get a specific user's todo by ID
 router.get('/getusertodo/:id', async (req, res) => {
@@ -60,6 +125,38 @@ router.get('/getusertodo/:id', async (req, res) => {
   }
 });
 
+
+/**
+ * @swagger
+ * /api/user/updateusertodo/{id}:
+ *   put:
+ *     summary: Update a specific todo by ID for the user
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: content
+ *         schema:
+ *           type: object
+ *           properties:
+ *             content:
+ *               type: string
+ *             completed:
+ *               type: boolean
+ *     responses:
+ *       200:
+ *         description: Successfully updated todo
+ *       404:
+ *         description: Todo not found
+ */
 
 // Update a todo
 router.put('/updateusertodo/:id', async (req, res) => {
@@ -85,6 +182,29 @@ router.put('/updateusertodo/:id', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+/**
+ * @swagger
+ * /api/user/deleteusertodo/{id}:
+ *   delete:
+ *     summary: Delete a specific todo by ID for the user
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully deleted todo
+ *       404:
+ *         description: Todo not found
+ */
 
 // Delete a todo
 router.delete('/deleteusertodo/:id', async (req, res) => {
