@@ -4,6 +4,30 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
+/**
+ * @swagger
+ * /api/user/register:
+ *   post:
+ *     summary: Register a new user
+ *     parameters:
+ *       - in: body
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful registration
+ *       400:
+ *         description: Username already exists
+ */
+
 // Register route
 router.post('/register', async (req, res) => {
   // Check if user already exists
@@ -29,6 +53,27 @@ router.post('/register', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+/**
+ * @swagger
+ * /api/user/login:
+ *   post:
+ *     summary: Log in a user
+ *     parameters:
+ *       - in: body
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful login
+ */
 
 // Login route
 router.post('/login', async (req, res) => {
@@ -57,6 +102,22 @@ router.post('/login', async (req, res) => {
   res.cookie('refreshToken', refreshToken, { httpOnly: true });
   res.json({ accessToken });
 });
+
+
+
+/**
+ * @swagger
+ * /api/user/token:
+ *   post:
+ *     summary: Refresh an access token
+ *     responses:
+ *       200:
+ *         description: New access token provided
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ */
 
 // Refresh token route
 router.post('/token', async (req, res) => {
@@ -90,6 +151,19 @@ router.post('/token', async (req, res) => {
   res.json({ accessToken: newAccessToken });
 });
 
+
+/**
+ * @swagger
+ * /api/user/logout:
+ *   post:
+ *     summary: Log out a user
+ *     responses:
+ *       204:
+ *         description: Successfully logged out
+ *       404:
+ *         description: User not found
+ */
+
 // Logout route
 router.post('/logout', async (req, res) => {
   // Get user from access token
@@ -109,6 +183,21 @@ router.post('/logout', async (req, res) => {
 
   res.sendStatus(204); // Success with no content to send
 });
+
+
+/**
+ * @swagger
+ * /api/user/username:
+ *   get:
+ *     summary: Retrieve username of the user
+ *     responses:
+ *       200:
+ *         description: Username retrieved successfully
+ *       403:
+ *         description: Invalid token
+ *       404:
+ *         description: User not found
+ */
 
 // Get username of the user
 router.get('/username', async (req, res) => {
